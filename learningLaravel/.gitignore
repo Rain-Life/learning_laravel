@@ -2,7 +2,6 @@
 /public/hot
 /public/storage
 /storage/*.key
-/vendor
 .env
 .env.backup
 .phpunit.result.cache
@@ -13,3 +12,5 @@ yarn-error.log
 /storage/logs/*
 ../.idea/
 .idea/
+/vendor
+../.idea/

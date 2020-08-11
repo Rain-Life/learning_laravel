@@ -6,7 +6,7 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
-
+//(1) 定义了一个 LARAVEL_START 的常量，并赋值了小数点化的微秒数，作用就是记录 Laravel 启动的时间点
 define('LARAVEL_START', microtime(true));
 
 /*
@@ -20,7 +20,10 @@ define('LARAVEL_START', microtime(true));
 | loading any of our classes later on. It feels great to relax.
 |
 */
-
+//(2) 引入 vendor/autoload.php 文件，并执行此文件，将此文件中的变量、类、函数注入 PHP 运行内存中 [请到 <<Composer 自动加载的入口文件>> 继续阅读]
+/**
+ * 小知识：__DIR__：返回当前文件所在绝对路径，记住是当前文件哦
+*/
 require __DIR__.'/../vendor/autoload.php';
 
 /*
