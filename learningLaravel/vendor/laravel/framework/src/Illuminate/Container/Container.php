@@ -496,8 +496,9 @@ class Container implements ArrayAccess, ContainerContract
             throw new LogicException("[{$abstract}] is aliased to itself.");
         }
 
+        // (50) 给 aliases 属性赋值
         $this->aliases[$alias] = $abstract;
-
+        // (51) 给 abstractAliases 属性赋值
         $this->abstractAliases[$abstract][] = $alias;
     }
 
@@ -661,17 +662,19 @@ class Container implements ArrayAccess, ContainerContract
         // If an instance of the type is currently being managed as a singleton we'll
         // just return an existing instance instead of instantiating new instances
         // so the developer can keep using the same objects instance every time.
+        // ★核心一★：检测之前是否解析过对应的对象，有则返回对应对象；一种缓存机制，防止重复解析，提高程序运行效率
         if (isset($this->instances[$abstract]) && ! $needsContextualBuild) {
             return $this->instances[$abstract];
         }
 
         $this->with[] = $parameters;
-
+        // ★核心二★：通过 $abstract 到 bindings 属性中取得生成对象的闭包函数，没有则返回 $abstract 本身
         $concrete = $this->getConcrete($abstract);
 
         // We're ready to instantiate an instance of the concrete type registered for
         // the binding. This will instantiate the types, as well as resolve any of
         // its "nested" dependencies recursively until all have gotten resolved.
+        // ★核心三★：判断是否可以创建对象，来确定调用 build 方法还是重新调用 make 方法
         if ($this->isBuildable($concrete, $abstract)) {
             $object = $this->build($concrete);
         } else {

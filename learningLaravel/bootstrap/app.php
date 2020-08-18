@@ -41,6 +41,7 @@ $app = new Illuminate\Foundation\Application(
   从Web和CLI向此应用程序的传入请求
 */
 //把没有做好的 `App\Http\Kernel` 类的对象，放在 bindings 属性中， `Illuminate\Contracts\Http\Kernel` 这串字符就是标记
+//类名::class 的作用：它的作用是返回一个标准的类全名（包含从根命名空间到当前空间的路由）
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
     App\Http\Kernel::class

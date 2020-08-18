@@ -156,6 +156,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         $this->registerBaseBindings();
         // (25) 注册基本服务提供者
         $this->registerBaseServiceProviders();
+        // (48) 注册标识 bindings 属性标识的获取套路
         $this->registerCoreContainerAliases();
     }
 
@@ -654,10 +655,12 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
         // If the application has already booted, we will call this boot method on
         // the provider class so it has an opportunity to do its boot logic and
         // will be ready for any usage by this developer's application logic.
+        //(44) 是否执行服务提供者的 boot 方法，初始化不执行
         if ($this->isBooted()) {
             $this->bootProvider($provider);
         }
 
+        // (45) 返回
         return $provider;
     }
 
@@ -1195,6 +1198,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
             'view'                 => [\Illuminate\View\Factory::class, \Illuminate\Contracts\View\Factory::class],
         ] as $key => $aliases) {
             foreach ($aliases as $alias) {
+                // (49) 循环执行，给 aliases 属性和 abstractAliases 进行赋值 [请到 <<Container>> 继续阅读]
                 $this->alias($key, $alias);
             }
         }
